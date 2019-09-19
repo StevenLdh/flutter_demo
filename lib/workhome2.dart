@@ -45,7 +45,7 @@ class MyHomePage extends StatelessWidget {
               ///下层
               Container(
                 width: double.maxFinite,
-                height: 360,
+                //height: 360,
                 decoration: BoxDecoration(
 
                 ),
@@ -101,7 +101,7 @@ class TitleBar extends StatelessWidget {
             ),
             child:Center(
               child: Text(
-                "资金管理",
+                "水果区",
                 textAlign: TextAlign.center,
               ),
             ),
@@ -124,6 +124,10 @@ class BodyMain extends StatelessWidget {
           HeaderBar(),
           ///菜单选择
           MyListView(),
+          ///图片
+          Images(),
+          ///产品
+          MyListTitle(),
         ],
       ),
     );
@@ -133,13 +137,13 @@ class BodyMain extends StatelessWidget {
 ///菜单选择
 class MyListView extends StatelessWidget {
   static const List billDatas = const [
-    {'name': '销售单', 'icon': Icons.repeat_one},
-    {'name': '零售单', 'icon': Icons.select_all},
-    {'name': '采购单', 'icon': Icons.format_list_bulleted},
-    {'name': '收款单', 'icon': Icons.alarm},
-    {'name': '盘点', 'icon': Icons.transfer_within_a_station},
-    {'name': '报表', 'icon': Icons.pie_chart},
-    {'name': '查应收', 'icon': Icons.explicit},
+    {'name': '水果', 'icon': Icons.repeat_one},
+    {'name': '蔬菜', 'icon': Icons.select_all},
+    {'name': '饮料', 'icon': Icons.format_list_bulleted},
+    {'name': '肉类', 'icon': Icons.alarm},
+    {'name': '米面', 'icon': Icons.transfer_within_a_station},
+    {'name': '调料', 'icon': Icons.pie_chart},
+    {'name': '烟酒', 'icon': Icons.explicit},
     {'name': '更多', 'icon': Icons.more_vert},
   ];
   List<Widget> getItems() {
@@ -195,7 +199,7 @@ class MyListView extends StatelessWidget {
       child: Center(
         child: Container(
             width: double.maxFinite,
-            //height: 160,
+            //height: 360,
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -220,6 +224,116 @@ class MyListView extends StatelessWidget {
               ),
               scrollDirection: Axis.horizontal,
             ),
+        ),
+      ),
+    );
+  }
+}
+
+///图片
+class Images extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top:190,left: 5, right: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(
+            height: 16,
+          ),
+          Image.network(
+            'http://pic237.nipic.com/file/20190827/27588209_172246323087_2.jpg?t=${DateTime.now().millisecondsSinceEpoch}',
+            frameBuilder: (BuildContext context, Widget child, int frame, bool wasSynchronouslyLoaded) {
+              print("----------  frame=$frame  wasSynchronouslyLoaded = $wasSynchronouslyLoaded");
+              if (wasSynchronouslyLoaded) {
+                return child;
+              }
+              return AnimatedOpacity(
+                child: child,
+                opacity: frame == null ? 0 : 1,
+                duration: const Duration(seconds: 10),
+                curve: Curves.easeOut,
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+///菜单选择
+class MyListTitle extends StatelessWidget {
+  static const List billDatas = const [
+    {'name': '苹果','enname':'甘肃红富士', 'icon': 'http://pic237.nipic.com/file/20190827/27588209_172246323087_2.jpg'},
+    {'name': '芒果','enname':'台北芒果', 'icon': 'http://pic128.huitu.com/res/20190901/450439_20190901213822341050_1.jpg'},
+    {'name': '香蕉','enname':'热带香蕉', 'icon': 'http://pic128.huitu.com/res/20190903/926746_20190903152041751050_1.jpg'},
+    {'name': '梨子','enname':'汉源金花梨', 'icon': 'http://pic128.huitu.com/res/20190826/1558596_20190826235938906060_1.jpg'},
+    {'name': '葡萄','enname':'本地葡萄', 'icon': 'http://pic124.huitu.com/res/20190701/1792553_20190701000527691060_1.jpg'},
+    {'name': '西瓜','enname':'冰糖瓜', 'icon': 'http://pic128.huitu.com/res/20190820/1153901_20190820163747181010_1.jpg'},
+    {'name': '猕猴桃','enname':'蒲江红心猕猴桃', 'icon': 'http://pic237.nipic.com/file/20190827/27588209_172246323087_2.jpg'},
+    {'name': '更多','enname':'更多水果', 'icon': 'http://pic128.huitu.com/res/20190828/192531_20190828163937009020_1.jpg'},
+  ];
+  List<Widget> getItems() {
+    return billDatas.map((item) {
+      return Padding(
+        padding: const EdgeInsets.only(
+            left: 0
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            ListTile(
+              leading: CircleAvatar(
+                backgroundImage: NetworkImage(item['icon']),
+              ),
+              title: Text(item['name']),
+              subtitle: Text(item['enname']),
+              trailing: Icon(Icons.keyboard_arrow_right),
+              onTap: () {
+                print('horse');
+              },
+              selected: true,
+            ),
+          ],
+        ),
+
+      );
+    }).toList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 380,left: 5, right: 5),
+      child: Center(
+        child: Container(
+          width: double.maxFinite,
+          //height: 360,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey[300],
+                    offset: Offset(0, 1),
+                    blurRadius: 3)
+              ]),
+          child:   ListView.custom(
+            childrenDelegate: SliverChildBuilderDelegate(
+                    (context,index){
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                        top: 0),
+                    child: getItems()[index],
+                  );
+                },
+                childCount:  getItems().length
+
+            ),
+            scrollDirection: Axis.vertical,
+          ),
         ),
       ),
     );
@@ -297,7 +411,7 @@ class RedPoint extends StatelessWidget {
 ///人物头像+小红点
 class HeaderWidget extends StatelessWidget {
   static const String headUrl =
-      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1568190482108&di=d3e7d0be904ac8b49e27f66c5471939b&imgtype=0&src=http%3A%2F%2Fpic2.zhimg.com%2F50%2Fv2-f34145b01ab1d5bb463cac35ddc9777d_hd.jpg';
+      'http://5b0988e595225.cdn.sohucs.com/q_70,c_zoom,w_640/images/20190207/c936c6a4d4104dd0ae77aea7ff9c3085.jpeg';
 
   @override
   Widget build(BuildContext context) {
