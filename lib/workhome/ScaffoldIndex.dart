@@ -2,47 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app2/workhome/MessageDemoPage.dart';
 import 'package:flutter_app2/workhome/MyHome.dart';
 
-///程序入口
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    ///
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: '首页',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: '首页'),
-    );
-  }
-
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-class _MyHomePageState extends State<MyHomePage> {
-
-  @override
-  Widget build(BuildContext context) {
-    return ScaffoldDemoPage();
-  }
-}
-class ScaffoldDemoPage extends StatefulWidget {
+class ScaffoldIndex extends StatefulWidget {
+  final String from;
+  ScaffoldIndex({Key key, this.from}):super(key:key);
   @override
   _ScaffoldDemoPageState createState() => _ScaffoldDemoPageState();
 }
 
-class _ScaffoldDemoPageState extends State<ScaffoldDemoPage> {
+class _ScaffoldDemoPageState extends State<ScaffoldIndex> {
 
   ///当前选中的页面
   int _selectedIndex = 0;
@@ -66,7 +33,7 @@ class _ScaffoldDemoPageState extends State<ScaffoldDemoPage> {
 
     ///
     tabDatas = [
-      { 'name':'首页', 'icon': Icons.computer,'page':ScaffoldDemoPage() },
+      { 'name':'首页', 'icon': Icons.computer,'page':ScaffoldIndex() },
       { 'name':'消息', 'icon': Icons.assignment,'page':MessageDemoPage()},
       { 'name':'我的', 'icon':Icons.date_range,'page':MyHome()},
     ];
@@ -267,7 +234,6 @@ class _ScaffoldDemoPageState extends State<ScaffoldDemoPage> {
     }));
   }
 }
-
 
 ///页面Demo
 class PageDemoWidget extends StatelessWidget {
